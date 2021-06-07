@@ -1,4 +1,4 @@
-module github.com/AeroAgency/go-gin-traceser
+module github.com/AeroAgency/go-gin-tracer
 
 go 1.13
 

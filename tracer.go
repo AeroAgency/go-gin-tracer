@@ -14,7 +14,7 @@ import (
 	"net/http"
 )
 
-func setJaegerTracer(traceHeader string) (opentracing.Tracer, io.Closer, error) {
+func SetJaegerTracer(traceHeader string) (opentracing.Tracer, io.Closer, error) {
 	cfg, err := jaegercfg.FromEnv()
 	if err != nil {
 		zerologger.Error().Msg(fmt.Sprintf("Could not parse Jaeger env vars: %s", err.Error()))
