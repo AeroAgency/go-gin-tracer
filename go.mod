@@ -1,4 +1,4 @@
-module accesscontrol
+module github.com/AeroAgency/go-gin-traceser
 
 go 1.13
 
