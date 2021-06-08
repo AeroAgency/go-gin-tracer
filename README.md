@@ -6,10 +6,15 @@
 TRACE_HEADER=uber-trace-id // устанавливается, если нужен кастомный заголовок
 
 JAEGER_SERVICE_NAME=service_control
+
 JAEGER_AGENT_HOST=localhost
+
 JAEGER_AGENT_PORT=6831
+
 JAEGER_SAMPLER_TYPE=const
+
 JAEGER_REPORTER_LOG_SPANS=true
+
 JAEGER_SAMPLER_PARAM=1
 
 Можно установить остальные параметры из github.com/uber/jaeger-client-go/config
