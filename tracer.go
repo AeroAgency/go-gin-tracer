@@ -9,6 +9,7 @@ import (
 	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
 	jaegerlog "github.com/uber/jaeger-client-go/log"
+	"github.com/uber/jaeger-client-go/zipkin"
 	"github.com/uber/jaeger-lib/metrics"
 	"io"
 	"net/http"
@@ -25,9 +26,13 @@ func SetJaegerTracer(traceHeader string) (opentracing.Tracer, io.Closer, error) 
 	cfg.Headers = customHeaders
 	jLogger := jaegerlog.StdLogger
 	jMetricsFactory := metrics.NullFactory
+	// Zipkin shares span ID between client and server spans; it must be enabled via the following option.
+	zipkinPropagator := zipkin.NewZipkinB3HTTPHeaderPropagator()
 	tracer, closer, err := cfg.NewTracer(
 		jaegercfg.Logger(jLogger),
 		jaegercfg.Metrics(jMetricsFactory),
+		jaegercfg.Injector(opentracing.HTTPHeaders, zipkinPropagator),
+		jaegercfg.Extractor(opentracing.HTTPHeaders, zipkinPropagator),
 	)
 	if err != nil {
 		zerologger.Error().Msg(fmt.Sprintf("Could not create Jaeger traces: %s", err.Error()))
