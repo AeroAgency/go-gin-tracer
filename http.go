@@ -51,6 +51,7 @@ func (lrt TracingRoundTripper) RoundTrip(req *http.Request) (res *http.Response,
 		tracer.LogError(err)
 	}
 
+	tracer.LogData("response", res)
 	return res, err
 }
 
