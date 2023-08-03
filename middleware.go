@@ -59,6 +59,9 @@ func OpenTracingMiddleware() gin.HandlerFunc {
 		if scope != nil {
 			c.Set("tracing-context", scope.GetSpan())
 		}
+		if sc, ok := scope.GetSpan().Context().(jaeger.SpanContext); ok {
+			c.Writer.Header().Set("X-TRACE-ID", sc.TraceID().String())
+		}
 		c.Next()
 	}
 }
