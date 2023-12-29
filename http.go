@@ -50,7 +50,9 @@ func (lrt TracingRoundTripper) RoundTrip(req *http.Request) (res *http.Response,
 	if err != nil {
 		tracer.LogError(err)
 	}
-
+	if res == nil {
+		return nil, err
+	}
 	if res.Body != nil {
 		b, _ := ioutil.ReadAll(res.Body)
 		body := fmt.Sprintf("%s", b)
