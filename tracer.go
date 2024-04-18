@@ -110,6 +110,10 @@ func (t *Tracer) Log(key, message string) {
 }
 
 func (t *Tracer) LogData(key string, data interface{}) {
+	isExtendedTraceLogsEnable := GetterBool("ENABLE_EXTENDED_TRACE_LOGS", false)
+	if !isExtendedTraceLogsEnable {
+		return
+	}
 	t.scope.GetSpan().LogFields(fields.Object(key, data))
 }
 
